@@ -1,0 +1,17 @@
+dist: xenial
+language: python
+python: 3.7
+install:
+- pip install -r requirements.txt
+- python setup.py install
+script: pytest
+addons:
+  ssh_known_hosts:
+  - 18.191.149.127
+before_deploy:
+- openssl aes-256-cbc -K $encrypted_c5a42ed98659_key -iv $encrypted_c5a42ed98659_iv -in deploy_rsa.enc -out deploy_rsa -d
+- chmod 600 deploy_rsa
+deploy:
+  provider: script
+  skip_cleanup: true
+  script: ssh -i deploy_rsa ubuntu@18.191.149.127 'source /home/ubuntu/CICD_Practice2/scripts/deploy.sh'

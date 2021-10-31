@@ -1,0 +1,11 @@
+
+[Unit]
+Description=Start CICDPractice on Boot
+After=multi-user.target
+
+[Service]
+Type=idle
+ExecStart=/usr/local/bin/gunicorn -b 0.0.0.0:80 --chdir /home/ubuntu/CICD_Practice2/src/CICDPractice2 app:app
+
+[Install]
+WantedBy=multi-user.target
